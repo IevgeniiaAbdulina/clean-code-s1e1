@@ -1,5 +1,5 @@
 const newTaskInput = document.getElementById("new-task__name__input");
-const newTaskAddButtton = document.getElementsByTagName("new-task__add-task__button");
+const newTaskAddButton = document.getElementById("new-task__add-task__button");
 const uncompletedTasksHolder = document.getElementById("tasks-list__uncompleted");
 const completedTasksHolder = document.getElementById("tasks-list__completed");
 
@@ -9,18 +9,25 @@ const createNewTaskElement = function (taskString) {
     const taskCompleteCheckbox = document.createElement("input");
     const taskNameLabel = document.createElement("label");
     const taskChangedInput = document.createElement("input");
+    const taskChangedLabel = document.createElement("label");
     const taskEditButton = document.createElement("button");
     const taskDeleteButton = document.createElement("button");
     const taskDeleteButtonImage = document.createElement("img");
+    const uuid = window.crypto.randomUUID();
 
     taskCompleteCheckbox.type = "checkbox";
     taskCompleteCheckbox.className = "task-item__complete__checkbox";
+    taskCompleteCheckbox.setAttribute("id", `task-item__name-${uuid}`);
 
     taskNameLabel.innerText = taskString;
     taskNameLabel.className = "task-item__name__label task";
+    taskNameLabel.setAttribute("for", `task-item__name-${uuid}`);
 
     taskChangedInput.type = "text";
     taskChangedInput.className = "task-item__input__changed task";
+    taskChangedInput.setAttribute("id", `task-item__input-${uuid}`);
+
+    taskChangedLabel.setAttribute("for", `task-item__input-${uuid}`);
 
     taskEditButton.innerText = "Edit";
     taskEditButton.className = "task-item__edit__button";
@@ -33,6 +40,7 @@ const createNewTaskElement = function (taskString) {
     listItem.appendChild(taskCompleteCheckbox);
     listItem.appendChild(taskNameLabel);
     listItem.appendChild(taskChangedInput);
+    listItem.appendChild(taskChangedLabel);
     listItem.appendChild(taskEditButton);
     listItem.appendChild(taskDeleteButton);
     return listItem;
@@ -96,9 +104,9 @@ const ajaxRequest = function () {
 }
 
 //Set the click handler to the addTask function.
-newTaskAddButtton.onclick = addTask;
-newTaskAddButtton.addEventListener("click", addTask);
-newTaskAddButtton.addEventListener("click", ajaxRequest);
+newTaskAddButton.onclick = addTask;
+newTaskAddButton.addEventListener("click", addTask);
+newTaskAddButton.addEventListener("click", ajaxRequest);
 
 
 const bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
