@@ -59,17 +59,18 @@ const addTask = function () {
 
 const editTask = function () {
     const listItem = this.parentNode;
-    const editInput = listItem.querySelector("input[type=text]");
-    const label = listItem.querySelector("label");
-    const editBtn = listItem.querySelector(".edit");
+
+    const taskChangedInput = listItem.querySelector(".task-item__input__changed");
+    const taskNameLabel = listItem.querySelector(".task-item__name__label");
+    const taskEditButton = listItem.querySelector(".task-item__edit__button");
     const containsClass = listItem.classList.contains("edit-mode");
 
     if (containsClass) {
-        label.innerText = editInput.value;
-        editBtn.innerText = "Edit";
+        taskNameLabel.innerText = taskChangedInput.value;
+        taskEditButton.innerText = "Edit";
     } else {
-        editInput.value = label.innerText;
-        editBtn.innerText = "Save";
+        taskChangedInput.value = taskNameLabel.innerText;
+        taskEditButton.innerText = "Save";
     }
 
     listItem.classList.toggle("edit-mode");
