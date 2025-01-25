@@ -50,7 +50,7 @@ const addTask = function () {
     const listItem = createNewTaskElement(newTaskInput.value);
 
     uncompletedTasksHolder.appendChild(listItem);
-    bindTaskEvents(listItem, taskCompleted);
+    bindTaskEvents(listItem);
 
     newTaskInput.value = "";
 }
@@ -80,38 +80,33 @@ const deleteTask = function () {
     listItemContainer.removeChild(listItem);
 }
 
-const taskCompleted = function () {
+const changeTaskCompletion = function (event) {
     const listItem = this.parentNode;
+    const taskCompleteCheckbox = event.target;
+    let completed = taskCompleteCheckbox.checked;
 
-    completedTasksHolder.appendChild(listItem);
-    bindTaskEvents(listItem, taskIncomplete);
-}
-
-const taskIncomplete = function () {
-    const listItem = this.parentNode;
-
-    uncompletedTasksHolder.appendChild(listItem);
-    bindTaskEvents(listItem, taskCompleted);
+    let holder = (completed) ? completedTasksHolder : uncompletedTasksHolder;
+    holder.appendChild(listItem);
 }
 
 //Set the click handler to the addTask function.
 newTaskAddButton.onclick = addTask;
 newTaskAddButton.addEventListener("click", addTask);
 
-const bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
+const bindTaskEvents = function (taskListItem) {
     const taskCompleteCheckbox = taskListItem.querySelector(".task-item__complete__checkbox");
     const taskEditButton = taskListItem.querySelector(".task-item__edit__button");
     const taskDeleteButton = taskListItem.querySelector(".task-item__delete__button");
 
     taskEditButton.onclick = editTask;
     taskDeleteButton.onclick = deleteTask;
-    taskCompleteCheckbox.onchange = checkBoxEventHandler;
+    taskCompleteCheckbox.onchange = changeTaskCompletion;
 }
 
 for (let i = 0; i < uncompletedTasksHolder.children.length; i++) {
-    bindTaskEvents(uncompletedTasksHolder.children[i], taskCompleted);
+    bindTaskEvents(uncompletedTasksHolder.children[i]);
 }
 
 for (let i = 0; i < completedTasksHolder.children.length; i++) {
-    bindTaskEvents(completedTasksHolder.children[i], taskIncomplete);
+    bindTaskEvents(completedTasksHolder.children[i]);
 }

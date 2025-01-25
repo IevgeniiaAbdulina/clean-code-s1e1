@@ -154,11 +154,11 @@ li > * {
     display: none;
 }
 
-.task-item__input__changed .edit-mode {
+.edit-mode .task-item__input__changed {
     display: inline-block;
     width: 224px;
 }
 
-.task-item__name__label .edit-mode {
+.edit-mode .task-item__name__label {
     display: none;
 }
